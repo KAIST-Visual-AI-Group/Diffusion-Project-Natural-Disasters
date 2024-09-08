@@ -24,13 +24,14 @@
 </div>
 
 ## Abstract
-In this project, you will design diffusion models for modeling the distribution of volcanic eruptions and use the model to predict the locations where they are likely to take place. You will use real-world data provided by [NOAA National Centers for Environmental Information (NCEI)](https://www.ngdc.noaa.gov/ngdc.html) to train and evaluate your models.
+In this project, you will design diffusion models for modeling the distribution of locations where volcanic eruptions took place. You will use real-world data provided by [NOAA National Centers for Environmental Information (NCEI)](https://www.ngdc.noaa.gov/ngdc.html) to train and evaluate your models.
 
 ## Data Specification
-The directory `data` that contains the training data contains the file `volcano.csv` which contains the following columns:
-- `latitude`: Latitude of the location where a volcanic eruption occurred
-- `longitude`: Longitude of the location where a volcanic eruption occurred
+The file `data/volcano.tsv` contains training data each consisting of the following fields:
+- `Latitude`: Latitude of the location where a volcanic eruption occurred
+- `Longitude`: Longitude of the location where a volcanic eruption occurred
 
 ## Tasks
+Design and implement your own diffusion model for modeling the distribution of volcanic eruptions. Compute the evaluation metrics listed in the next section to assess the performance of your model.
 
 ## Evaluation
