@@ -35,3 +35,12 @@ The file `data/volcano.tsv` contains training data each consisting of the follow
 Design and implement your own diffusion model for modeling the distribution of volcanic eruptions. Compute the evaluation metrics listed in the next section to assess the performance of your model.
 
 ## Evaluation
+After generating the samples in the form of (Longitude, Latitude), you will evaluate the performance of your model by measuring the geodesic distance between the predicted locations and the ground-truth locations.
+
+In particular, use the following command to run evaluation:
+```
+python scripts/eval.py --gen-pts-path {PATH TO GENERATED POINTS}
+```
+The script expects either:
+  1. a `.csv`/`.tsv` file containing a table with two columns: `Longitude` and `Latitude` or,
+  2. a `.npy` file containing a numpy array of shape `(N, 2)` where `N` is the number of samples, and the first and second columns correspond to `Longitude` and `Latitude`, respectively.
