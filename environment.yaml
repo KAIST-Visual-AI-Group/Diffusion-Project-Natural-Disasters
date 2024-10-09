@@ -1,0 +1,27 @@
+name: cs492-proj
+channels:
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1
+  - _openmp_mutex=5.1
+  - bzip2=1.0.8
+  - ca-certificates=2024.9.24
+  - ld_impl_linux-64=2.40
+  - libffi=3.4.4
+  - libgcc-ng=11.2.0
+  - libgomp=11.2.0
+  - libstdcxx-ng=11.2.0
+  - libuuid=1.41.5
+  - ncurses=6.4
+  - openssl=3.0.15
+  - pip=24.2
+  - python=3.10.15
+  - readline=8.2
+  - setuptools=75.1.0
+  - sqlite=3.45.3
+  - tk=8.6.14
+  - tzdata=2024b
+  - wheel=0.44.0
+  - xz=5.4.6
+  - zlib=1.2.13
+prefix: /home/dreamy1534/miniconda3/envs/cs492-proj
