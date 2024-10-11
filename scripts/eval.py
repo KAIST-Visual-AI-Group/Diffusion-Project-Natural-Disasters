@@ -8,13 +8,14 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from geographiclib.geodesic import Geodesic
-from jaxtyping import jaxtyped
+from jaxtyping import jaxtyped, Shaped
 import numpy as np
 from typeguard import typechecked
 import pandas as pd
 from tqdm import tqdm
 import tyro
-import vptree
+
+from scripts.utils import VPTree
 
 
 GT_PTS_PATH: Path = Path("./data/volcano.tsv")
@@ -56,29 +57,51 @@ def main(args: Args) -> None:
     else:
         raise ValueError(f"Unsupported file format: {GT_PTS_PATH.suffix}")
 
-    
-    # Geodesic distance from each generated point to the nearest ground truth point
-    d_gen2gt = 0.0
-    tree = vptree.VPTree(gt_pts, geoddist)
+    # Make sure that points are unique in each set
+    gt_pts = np.unique(gt_pts, axis=0)
+    gen_pts = np.unique(gen_pts, axis=0)
+
+    # Compute coverage.
+    # Coverage: Fraction of ground truth points that are the nearest neighbors of at least one generated point.
+    cov = compute_cov(gt_pts, gen_pts)
+
+    # Compute miminum matching distance.
+    # MMD: Average distance from each ground truth point to its nearest neighbor in the generated points.
+    mmd = compute_mmd(gt_pts, gen_pts)
+
+    print(f"COV: {cov:.5f} | MMD: {mmd:.5f}")
+
+@jaxtyped(typechecker=typechecked)
+def compute_cov(
+    gt_pts: Shaped[np.ndarray, "N 2"],
+    gen_pts: Shaped[np.ndarray, "N 2"],
+) -> float:
+    gt_nns = []
+
+    tree = VPTree(gt_pts, geoddist, point_ids=np.arange(len(gt_pts)))
     for gen_pt in tqdm(gen_pts):
         result = tree.get_nearest_neighbor(gen_pt)
-        d = result[0]
-        d_gen2gt += d
-    d_gen2gt /= len(gen_pts)
+        _, _, point_id = result
+        gt_nns.append(point_id)
+    gt_nns = set(gt_nns)
 
-    # Geodesic distance from each ground truth point to the nearest generated point
-    d_gt2gen = 0.0
-    tree = vptree.VPTree(gen_pts, geoddist)
+    cov = len(gt_nns) / len(gt_pts)
+    return cov
+
+@jaxtyped(typechecker=typechecked)
+def compute_mmd(
+    gt_pts: Shaped[np.ndarray, "N 2"],
+    gen_pts: Shaped[np.ndarray, "N 2"],
+) -> float:
+    mmd = 0.0
+
+    tree = VPTree(gen_pts, geoddist, point_ids=np.arange(len(gen_pts)))
     for gt_pt in tqdm(gt_pts):
-        result = tree.get_nearest_neighbor(gt_pt)
-        d = result[0]
-        d_gt2gen += d
-    d_gt2gen /= len(gt_pts)
+        dist, _, _ = tree.get_nearest_neighbor(gt_pt)
+        mmd += dist
+    mmd /= len(gt_pts)
 
-    d_total = d_gen2gt + d_gt2gen
-
-    print(f"Average geodesic distance: {d_total / len(gen_pts)}")
-
+    return mmd
 
 if __name__ == "__main__":
     main(
