@@ -1,21 +1,23 @@
 
+from dataclasses import dataclass
 from pathlib import Path
 
 import igl
 import numpy as np
 import pandas as pd
+import tyro
 
 
-def spherical_to_xyz(r, theta, phi):
-    x = r * np.sin(theta) * np.cos(phi)
-    y = r * np.sin(theta) * np.sin(phi)
-    z = r * np.cos(theta)
-    return np.stack([x, y, z], axis=-1)
+@dataclass
+class Args:
 
-def main() -> None:
+    in_file: Path
+    """Path to input file."""
+
+def main(args: Args) -> None:
 
     # Read training data
-    gt_pts_path: Path = Path("./data/volcano.tsv")
+    gt_pts_path = args.in_file
     assert gt_pts_path.exists(), f"File {gt_pts_path} does not exist."
 
     # Convert spherical to cartesian coordinates
@@ -28,12 +30,24 @@ def main() -> None:
 
     # Write to .off file
     igl.write_off(
-        "data/volcano.off",
+        str(args.in_file.with_suffix(".off")),
         gt_xyz,
         np.zeros((1, 3), dtype=int),
         np.ones_like(gt_xyz),
     )
 
+    print("Done!")
+
+
+def spherical_to_xyz(r, theta, phi):
+    x = r * np.sin(theta) * np.cos(phi)
+    y = r * np.sin(theta) * np.sin(phi)
+    z = r * np.cos(theta)
+    return np.stack([x, y, z], axis=-1)
+
 
 if __name__ == "__main__":
-    main()
+    main(
+        tyro.cli(Args)
+    )
+

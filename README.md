@@ -31,6 +31,20 @@ The file `data/volcano.tsv` contains training data each consisting of the follow
 - `Latitude`: Latitude of the location where a volcanic eruption occurred in degrees.
 - `Longitude`: Longitude of the location where a volcanic eruption occurred in degrees.
 
+We provide a script `scripts/convert_to_xyz.py` for converting the locations represented as (Latitude, Longitude) to 3D coordinates. You can use the following command to run the script:
+```
+python scripts/convert_to_xyz.py --in-file ./data/volcano.tsv
+```
+The script will generate an `.off` file containing the 3D coordinates of the locations. Note that we assume a sphere with a radius of 1 when converting spherical coordinates to Cartesian coordinates.
+
+You can visualize the converted points using tools of your choice, such as [MeshLab](https://www.meshlab.net). The following figure shows the point cloud viewed on MeshLab.
+<div align=center>
+   <img src="./assets/images/volcano_xyz.png">
+   <figcaption>
+    A 3D point cloud representing the locations of volcanic eruptions, converted from the original (Latitude, Longitude) coordinates using the script `scripts/convert_to_xyz.py`.
+    </figcaption>
+</div>
+
 ## Tasks
 Design and implement your own diffusion model for modeling the distribution of volcanic eruptions. Compute the evaluation metrics listed in the next section to assess the performance of your model.
 
