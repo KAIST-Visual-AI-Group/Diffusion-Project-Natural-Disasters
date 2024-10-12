@@ -1,6 +1,6 @@
 <div align=center>
   <h1>
-  Modeling the Distribution of Volcanic Eruptions using Diffusion Models  
+  Modeling the Distribution of Natural Disasters using Diffusion Models  
   </h1>
   <p>
     <a href=https://mhsung.github.io/kaist-cs492d-fall-2024/ target="_blank"><b>KAIST CS492(D): Diffusion Models and Their Applications (Fall 2024)</b></a><br>
@@ -24,16 +24,22 @@
 </div>
 
 ## Abstract
-In this project, you will design diffusion models for modeling the distribution of locations where volcanic eruptions took place. You will use real-world data provided by [NOAA National Centers for Environmental Information (NCEI)](https://www.ngdc.noaa.gov/ngdc.html) to train and evaluate your models.
+In this project, you will design diffusion models for modeling the distribution of locations where natural disasters took place. You will use real-world data provided by [NOAA National Centers for Environmental Information (NCEI)](https://www.ngdc.noaa.gov/ngdc.html) (volcanic eruptions, earthquakes), [Dartmouth Flood Observatory](https://floodobservatory.colorado.edu/index.html) (flood), and [NASA's Earth Science Data Systems (ESDS) Program](https://earthdata.nasa.gov) (fire) to train and evaluate your models.
 
 ## Data Specification
-The file `data/volcano.tsv` contains training data each consisting of the following fields:
-- `Latitude`: Latitude of the location where a volcanic eruption occurred in degrees.
-- `Longitude`: Longitude of the location where a volcanic eruption occurred in degrees.
+Under the directory `data`, you will find the following files:
+- `volcano.tsv`: A tab-separated file containing 274 locations of volcanic eruptions.
+- `earthquake.tsv`: A tab-separated file containing 5447 locations of earthquakes.
+- `flood.tsv`: A tab-separated file containing 4861 locations of floods.
+- `fire.tsv`: A tab-separated file containing 12801 locations of fires.
+
+All files contain training data each consisting of the following fields:
+- `Latitude`: Latitude of the location where a natural disaster occurred in degrees.
+- `Longitude`: Longitude of the location where a natural disaster occurred in degrees.
 
 We provide a script `scripts/convert_to_xyz.py` for converting the locations represented as (Latitude, Longitude) to 3D coordinates. You can use the following command to run the script:
 ```
-python scripts/convert_to_xyz.py --in-file ./data/volcano.tsv
+python scripts/convert_to_xyz.py --in-file {PATH TO TSV FILE}
 ```
 The script will generate an `.off` file containing the 3D coordinates of the locations. Note that we assume a sphere with a radius of 1 when converting spherical coordinates to Cartesian coordinates.
 
@@ -46,7 +52,7 @@ You can visualize the converted points using tools of your choice, such as [Mesh
 </div>
 
 ## Tasks
-Design and implement your own diffusion model for modeling the distribution of volcanic eruptions. Compute the evaluation metrics listed in the next section to assess the performance of your model.
+Design and implement your own diffusion model for modeling the distribution of natural disasters. For each dataset, compute the evaluation metrics listed in the next section to assess the performance of your model(s).
 
 ## Evaluation
 After generating the samples in the form of (Longitude, Latitude), you will evaluate the performance of your model by measuring the coverage (COV) and minimum matching distance (MMD).
