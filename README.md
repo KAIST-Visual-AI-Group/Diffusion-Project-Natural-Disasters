@@ -49,13 +49,15 @@ You can visualize the converted points using tools of your choice, such as [Mesh
 Design and implement your own diffusion model for modeling the distribution of volcanic eruptions. Compute the evaluation metrics listed in the next section to assess the performance of your model.
 
 ## Evaluation
-After generating the samples in the form of (Longitude, Latitude), you will evaluate the performance of your model by measuring the geodesic distance between the predicted locations and the ground-truth locations.
+After generating the samples in the form of (Longitude, Latitude), you will evaluate the performance of your model by measuring the coverage (COV) and minimum matching distance (MMD).
+Specifically, the coverage is defined as the percentage of the ground truth samples that are the closest neighbors of the generated samples, and the minimum matching distance is the average distance between the generated samples and their closest neighbors in the ground truth samples.
 
-In particular, use the following command to run evaluation:
+To compute the aforementioned metrics, run the command:
 ```
+export PYTHONPATH=.  # Needed only once
 python scripts/eval.py --gen-pts-path {PATH TO GENERATED POINTS}
 ```
-The script expects either:
+The script `scripts/eval.py` expects either:
   1. a `.csv`/`.tsv` file containing a table with two columns: `Longitude` and `Latitude` or,
   2. a `.npy` file containing a numpy array of shape `(N, 2)` where `N` is the number of samples, and the first and second columns correspond to `Longitude` and `Latitude`, respectively.
 Note that the `Longitude` and `Latitude` values are represented in degrees.
