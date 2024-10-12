@@ -16,19 +16,18 @@
 </div>
 
 <div align=center>
-   <img src="./assets/images/teaser.png">
+   <img src="./assets/images/teaser_flood.jpg">
    <figcaption>
-    A map showing significant volcanic eruptions around the world based on data from the NCEI Significant Volcanic Eruptions Database.
-    <i>Source: <a href="https://www.ngdc.noaa.gov/ngdc.html">NOAA National Centers for Environmental Information (NCEI).</a></i>
+    A map showing significant floods around the world based on data from the Global Active Archive of Large Flood Events managed by Dartmouth Flood Observatory (DFO).
+    <i>Source: <a href="https://floodobservatory.colorado.edu/Archives/index.html">Dartmouth Flood Observatory (DFO).</a></i>
     </figcaption>
 </div>
 
 ## Abstract
-In this project, you will design diffusion models for modeling the distribution of locations where natural disasters took place. You will use real-world data provided by [NOAA National Centers for Environmental Information (NCEI)](https://www.ngdc.noaa.gov/ngdc.html) (volcanic eruptions, earthquakes), [Dartmouth Flood Observatory](https://floodobservatory.colorado.edu/index.html) (flood), and [NASA's Earth Science Data Systems (ESDS) Program](https://earthdata.nasa.gov) (fire) to train and evaluate your models.
+In this project, you will design diffusion models for modeling the distribution of locations where natural disasters took place. You will use real-world data provided by [NOAA National Centers for Environmental Information (NCEI)](https://www.ngdc.noaa.gov/ngdc.html) (earthquakes), [Dartmouth Flood Observatory](https://floodobservatory.colorado.edu/index.html) (flood), and [NASA's Earth Science Data Systems (ESDS) Program](https://earthdata.nasa.gov) (fire) to train and evaluate your models.
 
 ## Data Specification
 Under the directory `data`, you will find the following files:
-- `volcano.tsv`: A tab-separated file containing 274 locations of volcanic eruptions.
 - `earthquake.tsv`: A tab-separated file containing 5447 locations of earthquakes.
 - `flood.tsv`: A tab-separated file containing 4861 locations of floods.
 - `fire.tsv`: A tab-separated file containing 12801 locations of fires.
@@ -45,9 +44,9 @@ The script will generate an `.off` file containing the 3D coordinates of the loc
 
 You can visualize the converted points using tools of your choice, such as [MeshLab](https://www.meshlab.net). The following figure shows the point cloud viewed on MeshLab.
 <div align=center>
-   <img src="./assets/images/volcano_xyz.png">
+   <img src="./assets/images/flood_xyz.png">
    <figcaption>
-    A 3D point cloud representing the locations of volcanic eruptions, converted from the original (Latitude, Longitude) coordinates using the script `scripts/convert_to_xyz.py`.
+    A 3D point cloud representing the locations of significant floods, converted from the original (Latitude, Longitude) coordinates using the script `scripts/convert_to_xyz.py`.
     </figcaption>
 </div>
 
